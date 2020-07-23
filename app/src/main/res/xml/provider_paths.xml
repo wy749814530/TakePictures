@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <root-path
+            path=""
+            name="camera_photos" />
+    </paths>
+
+</resources>
+
+<!--
+    1、代表的根目录:Context.getFilesDir()
+    2、代表的根目录:Environment.getExternalStorageDirectory()
+    3、代表的根目录:getCacheDir()
+    4、上述代码中path=""，是有特殊意义的，它代码根目录，也就是说你可以向其它的应用
+    共享根目录及其子目录下任何一个文件了，如果你将path设为path=“pictures”，那么它
+    代表着根目录下的pictures目录(eg:/storage/emulated/0/pictures)，如果你向其它应用
+    分享pictures目录范围之外的文件是不行的。
+    -->
