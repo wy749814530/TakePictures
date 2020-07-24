@@ -11,8 +11,8 @@ import android.text.TextUtils;
 
 import androidx.core.content.FileProvider;
 
-import com.darsh.multipleimageselect.models.Image;
-import com.soundcloud.android.crop.Crop;
+import com.wang.multipleimageselect.models.Image;
+import com.wang.crop.Crop;
 import com.wang.takephoto.model.CropOptions;
 import com.wang.takephoto.model.TContextWrap;
 import com.wang.takephoto.model.TException;

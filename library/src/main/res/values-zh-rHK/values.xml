@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+    <string name="crop__cancel" >取消</string>
+    <string name="crop__done">完成</string>
+    <string name="crop__pick_error">无效的图片</string>
+    <string name="crop__saving">正在保存照片…</string>
+    <string name="crop__wait">请等待…</string>
+
+    <string name="add">添加</string>
+    <string name="album_view">选择相册</string>
+    <string name="app_name">多图像选择</string>
+    <string name="error_null_cursor">哎呀！出错了！</string>
+    <string name="grant_permission">授予权限</string>
+    <string name="image_view">点击选择图像</string>
+    <string name="limit_exceeded">最多可以选择%d张图像</string>
+    <string name="permission_denied_albums">允许访问设备上的照片，媒体和文件以查看相册</string>
+    <string name="permission_denied_images">允许访问设备上的照片，媒体和文件以查看图像</string>
+    <string name="selected">已选</string>
+    <string name="photo_album">相册</string>
+</resources>

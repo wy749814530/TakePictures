@@ -7,13 +7,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.darsh.multipleimageselect.helpers.Constants;
-import com.soundcloud.android.crop.Crop;
-import com.wang.takephoto.R;
+import com.wang.multipleimageselect.helpers.Constants;
+import com.wang.crop.Crop;
 import com.wang.takephoto.compress.CompressConfig;
 import com.wang.takephoto.compress.CompressImage;
 import com.wang.takephoto.compress.CompressImageImpl;
@@ -34,7 +32,7 @@ import com.wang.takephoto.uitl.TFileUtils;
 import com.wang.takephoto.uitl.TImageFiles;
 import com.wang.takephoto.uitl.TUriParse;
 import com.wang.takephoto.uitl.TUtils;
-import com.darsh.multipleimageselect.models.Image;
+import com.wang.multipleimageselect.models.Image;
 
 import java.io.File;
 import java.util.ArrayList;

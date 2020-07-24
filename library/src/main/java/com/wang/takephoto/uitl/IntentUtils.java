@@ -6,8 +6,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
-import com.darsh.multipleimageselect.helpers.Constants;
+import com.wang.multipleimageselect.activities.AlbumSelectActivity;
+import com.wang.multipleimageselect.helpers.Constants;
 import com.wang.takephoto.model.CropOptions;
 import com.wang.takephoto.model.TContextWrap;
 
