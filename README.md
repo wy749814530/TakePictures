@@ -1,23 +1,23 @@
 # 拍照相册选图框架
 
-## Step 1. Add the JitPack repository to your build file
+## 1. 将JitPack存储库添加到您的构建文件中
 ```java
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
-```
-
-## Step 2. Add the dependency
-```java
-dependencies {
-	        implementation 'com.github.wy749814530:TakePictures:1.0.2'
 }
 ```
 
-## How to use?
+## 2. 添加依赖
+```java
+dependencies {
+	implementation 'com.github.wy749814530:TakePictures:1.0.2'
+}
+```
+
+## 3.如何使用
 ```java
 class MainActivity : TakePhotoActivity() {
 
@@ -55,27 +55,27 @@ class MainActivity : TakePhotoActivity() {
 }
 ```
 
-## 相册选图与图片剪裁页面基础属性设置
+## 4.相册选图与图片剪裁页面基础属性设置
 
-### 设备背景色
+### 4.1 设备背景色
 ```java
     StylesContext.getInstance().setBackgroudColor(int backgroudColor);
 }
 ```
 
-### 设备标题栏背景色
+### 4.2 设备标题栏背景色
 ```java
     StylesContext.getInstance().setTitleBgColor(int titleBgColor);
 }
 ```
 
-### 设备返回按钮图标
+### 4.3 设备返回按钮图标
 ```java
     StylesContext.getInstance().setBackIcon(int backIconId);
 }
 ```
 
-### 设备取消选择按钮图标
+### 4.4 设备取消选择按钮图标
 ```java
     StylesContext.getInstance().setCancelIcon(int cancelIconId);
 }
