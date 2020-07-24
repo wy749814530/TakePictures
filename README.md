@@ -55,56 +55,33 @@ class MainActivity : TakePhotoActivity() {
 }
 ```
 
-## 属性设置
+## 相册选图与图片剪裁页面基础属性设置
+
+### 设备背景色
 ```java
-public class StylesContext {
-
-    private int backIcon = R.mipmap.icon_back;
-    private int cancelIcon = R.mipmap.icon_close;
-    private int titleBgColor = 0xffffffff;
-    private int backgroudColor = 0xffe9f2f7;
-
-    private StylesContext() {
-    }
-
-    private static class Factory {
-        private static StylesContext INSTANCE = new StylesContext();
-    }
-
-    public static StylesContext getInstance() {
-        return Factory.INSTANCE;
-    }
-
-    public void setBackgroudColor(int backgroudColor) {
-        this.backgroudColor = backgroudColor;
-    }
-
-    public int getBackgroudColor() {
-        return backgroudColor;
-    }
-
-    public void setBackIcon(int backIcon) {
-        this.backIcon = backIcon;
-    }
-
-    public int getBackIcon() {
-        return backIcon;
-    }
-
-    public void setCancelIcon(int cancelIcon) {
-        this.cancelIcon = cancelIcon;
-    }
-
-    public int getCancelIcon() {
-        return cancelIcon;
-    }
-
-    public void setTitleBgColor(int titleBgColor) {
-        this.titleBgColor = titleBgColor;
-    }
-
-    public int getTitleBgColor() {
-        return titleBgColor;
-    }
+    StylesContext.getInstance().setBackgroudColor(int backgroudColor);
 }
 ```
+
+### 设备标题栏背景色
+```java
+    StylesContext.getInstance().setTitleBgColor(int titleBgColor);
+}
+```
+
+### 设备返回按钮图标
+```java
+    StylesContext.getInstance().setBackIcon(int backIconId);
+}
+```
+
+### 设备取消选择按钮图标
+```java
+    StylesContext.getInstance().setCancelIcon(int cancelIconId);
+}
+```
+
+
+
+
+    
