@@ -13,7 +13,7 @@ allprojects {
 ## 2. 添加依赖
 ```java
 dependencies {
-	implementation 'com.github.wy749814530:TakePictures:1.0.2'
+	implementation 'com.github.wy749814530:TakePictures:1.0.3'
 }
 ```
 
