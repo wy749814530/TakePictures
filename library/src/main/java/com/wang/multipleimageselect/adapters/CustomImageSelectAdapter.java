@@ -33,7 +33,7 @@ public class CustomImageSelectAdapter extends CustomGenericAdapter<Image> {
             viewHolder = new ViewHolder();
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image_view_image_select);
             viewHolder.view = convertView.findViewById(R.id.view_alpha);
-
+            viewHolder.ivSelect = convertView.findViewById(R.id.ivSelect);
             convertView.setTag(viewHolder);
 
         } else {
@@ -48,16 +48,13 @@ public class CustomImageSelectAdapter extends CustomGenericAdapter<Image> {
 
         if (arrayList.get(position).isSelected) {
             viewHolder.view.setAlpha(0.5f);
-            ((FrameLayout) convertView).setForeground(context.getResources().getDrawable(R.drawable.ic_done_white));
-
+            viewHolder.ivSelect.setVisibility(View.VISIBLE);
         } else {
             viewHolder.view.setAlpha(0.0f);
-            ((FrameLayout) convertView).setForeground(null);
+            viewHolder.ivSelect.setVisibility(View.GONE);
         }
-        RequestOptions options = new RequestOptions().placeholder(R.drawable.image_placeholder);
-        Glide.with(context)
-                .load(arrayList.get(position).path)
-                .apply(options).into(viewHolder.imageView);
+        RequestOptions options = new RequestOptions().placeholder(R.mipmap.icon_default);
+        Glide.with(context).load(arrayList.get(position).path).apply(options).into(viewHolder.imageView);
 
         return convertView;
     }
@@ -65,6 +62,7 @@ public class CustomImageSelectAdapter extends CustomGenericAdapter<Image> {
     private static class ViewHolder {
         public ImageView imageView;
         public View view;
+        public ImageView ivSelect;
     }
 }
 
