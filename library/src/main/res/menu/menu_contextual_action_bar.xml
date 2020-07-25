@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_item_add_image"
         app:showAsAction="always"
-        android:title="@string/add"
+        android:title="@string/library_add"
         android:orderInCategory="100"/>
 
 </menu>

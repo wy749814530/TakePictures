@@ -26,6 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_margin="10dp"
-        android:src="@mipmap/icon_select"
+        android:src="@mipmap/library_icon_select"
         android:visibility="gone" />
 </FrameLayout>

@@ -47,12 +47,12 @@
 
     <style name="Crop.ActionButtonText.Cancel">
         <item name="android:drawableLeft">@drawable/crop__ic_cancel</item>
-        <item name="android:text">@string/crop__cancel</item>
+        <item name="android:text">@string/library_crop__cancel</item>
     </style>
 
     <style name="Crop.ActionButtonText.Done">
         <item name="android:drawableLeft">@drawable/crop__ic_done</item>
-        <item name="android:text">@string/crop__done</item>
+        <item name="android:text">@string/library_crop__done</item>
     </style>
 
     <style name="Crop.DoneCancelBar">

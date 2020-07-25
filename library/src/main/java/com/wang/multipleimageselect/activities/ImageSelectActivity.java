@@ -142,12 +142,12 @@ public class ImageSelectActivity extends AppCompatActivity {
             ivBack.setVisibility(View.GONE);
             ivCancel.setVisibility(View.VISIBLE);
             tvAdd.setVisibility(View.VISIBLE);
-            tvSelectDescription.setText(countSelected + " " + getString(R.string.selected));
+            tvSelectDescription.setText(countSelected + " " + getString(R.string.library_selected));
         } else {
             ivBack.setVisibility(View.VISIBLE);
             ivCancel.setVisibility(View.GONE);
             tvAdd.setVisibility(View.GONE);
-            tvSelectDescription.setText(getString(R.string.image_view));
+            tvSelectDescription.setText(getString(R.string.library_image_view));
         }
 
     }
@@ -329,7 +329,7 @@ public class ImageSelectActivity extends AppCompatActivity {
 
     private void toggleSelection(int position) {
         if (!images.get(position).isSelected && countSelected >= Constants.limit) {
-            Toast.makeText(getApplicationContext(), String.format(getString(R.string.limit_exceeded), Constants.limit), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), String.format(getString(R.string.library_limit_exceeded), Constants.limit), Toast.LENGTH_SHORT).show();
             return;
         }
 

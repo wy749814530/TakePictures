@@ -4,7 +4,6 @@ package com.wang.multipleimageselect.adapters;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +52,7 @@ public class CustomImageSelectAdapter extends CustomGenericAdapter<Image> {
             viewHolder.view.setAlpha(0.0f);
             viewHolder.ivSelect.setVisibility(View.GONE);
         }
-        RequestOptions options = new RequestOptions().placeholder(R.mipmap.icon_default);
+        RequestOptions options = new RequestOptions().placeholder(R.mipmap.library_icon_default);
         Glide.with(context).load(arrayList.get(position).path).apply(options).into(viewHolder.imageView);
 
         return convertView;
