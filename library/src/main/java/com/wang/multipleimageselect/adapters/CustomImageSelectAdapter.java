@@ -80,6 +80,7 @@ public class CustomImageSelectAdapter extends RecyclerView.Adapter<CustomImageSe
 
     private OnItemClickListener mListener;
 
+
     public interface OnItemClickListener {
         void onItemClick(Image image, int index);
     }

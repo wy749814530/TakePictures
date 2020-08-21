@@ -47,8 +47,6 @@ public class CustomAlbumSelectAdapter extends CustomGenericAdapter<Album> {
 
         viewHolder.textView.setText(arrayList.get(position).name);
         RequestOptions options = new RequestOptions().centerCrop().placeholder(R.mipmap.library_icon_default);
-        Log.i("SelectAdapter", "" + arrayList.get(position).cover);
-        Log.e("SelectAdapter", "" + arrayList.get(position).cover);
         Glide.with(context).load(arrayList.get(position).cover).apply(options).into(viewHolder.imageView);
 
         return convertView;
