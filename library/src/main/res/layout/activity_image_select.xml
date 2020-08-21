@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:apps="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_main_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,7 +26,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:onClick="onBackClick"
-                android:src="@mipmap/icon_back" />
+                android:src="@mipmap/library_icon_back" />
 
             <ImageView
                 android:id="@+id/ivCancel"
@@ -34,7 +35,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:onClick="onCancelClick"
-                android:src="@mipmap/icon_close"
+                android:src="@mipmap/library_icon_close"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -45,7 +46,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/ll_left_lay"
-            android:text="@string/image_view"
+            android:text="@string/library_image_view"
             android:textColor="#222222"
             android:textSize="14sp" />
 
@@ -58,7 +59,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:onClick="onAddClick"
-            android:text="@string/add"
+            android:text="@string/library_add"
             android:textColor="#222222"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -71,7 +72,7 @@
         android:layout_centerInParent="true"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/permission_denied_images" />
+        android:text="@string/library_permission_denied_images" />
 
     <ProgressBar
         android:id="@+id/progress_bar_image_select"
@@ -84,9 +85,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/error_null_cursor" />
+        android:text="@string/library_error_null_cursor" />
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid_view_image_select"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -95,7 +96,9 @@
         android:paddingTop="1dp"
         android:paddingRight="1dp"
         android:paddingBottom="1dp"
-        android:stretchMode="columnWidth" />
+        android:stretchMode="columnWidth"
+        apps:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        apps:spanCount="3" />
 
     <Button
         android:id="@+id/button_grant_permission"
@@ -105,7 +108,7 @@
         android:layout_margin="16dp"
         android:background="@color/multiple_image_select_accent"
         android:padding="16dp"
-        android:text="@string/grant_permission"
+        android:text="@string/library_grant_permission"
         android:textAllCaps="true"
         android:textColor="@color/multiple_image_select_buttonText"
         android:textSize="20sp" />

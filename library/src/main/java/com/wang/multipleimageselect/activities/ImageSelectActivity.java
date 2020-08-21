@@ -2,25 +2,22 @@ package com.wang.multipleimageselect.activities;
 
 
 import android.Manifest;
-import android.content.Context;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.provider.MediaStore;
-
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -30,15 +27,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.wang.context.StylesContext;
 import com.wang.multipleimageselect.adapters.CustomImageSelectAdapter;
 import com.wang.multipleimageselect.helpers.Constants;
 import com.wang.multipleimageselect.models.Image;
-import com.wang.context.StylesContext;
 import com.wang.takephoto.R;
 import com.wang.utils.StatusUtils;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -56,7 +55,7 @@ public class ImageSelectActivity extends AppCompatActivity {
     private TextView errorDisplay;
     private TextView tvSelectDescription, tvAdd;
     private ProgressBar progressBar;
-    private GridView gridView;
+    private RecyclerView gridView;
     private RelativeLayout rlMainLay;
     private RelativeLayout rlTitleLay;
     private CustomImageSelectAdapter adapter;
@@ -101,14 +100,17 @@ public class ImageSelectActivity extends AppCompatActivity {
         hidePermissionHelperUI();
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar_image_select);
-        gridView = (GridView) findViewById(R.id.grid_view_image_select);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView = findViewById(R.id.grid_view_image_select);
+        adapter = new CustomImageSelectAdapter(getApplicationContext(), images);
+        gridView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CustomImageSelectAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                toggleSelection(position);
+            public void onItemClick(Image image, int index) {
+                toggleSelection(index);
                 selectImageChanged();
             }
         });
+
         initStyles();
         StatusUtils.defaultImmersive(this, rlTitleLay);
     }
@@ -142,12 +144,12 @@ public class ImageSelectActivity extends AppCompatActivity {
             ivBack.setVisibility(View.GONE);
             ivCancel.setVisibility(View.VISIBLE);
             tvAdd.setVisibility(View.VISIBLE);
-            tvSelectDescription.setText(countSelected + " " + getString(R.string.selected));
+            tvSelectDescription.setText(countSelected + " " + getString(R.string.library_selected));
         } else {
             ivBack.setVisibility(View.VISIBLE);
             ivCancel.setVisibility(View.GONE);
             tvAdd.setVisibility(View.GONE);
-            tvSelectDescription.setText(getString(R.string.image_view));
+            tvSelectDescription.setText(getString(R.string.library_image_view));
         }
 
     }
@@ -189,23 +191,13 @@ public class ImageSelectActivity extends AppCompatActivity {
                         However, if adapter has been initialised, this thread was run either
                         due to the activity being restarted or content being changed.
                          */
-                        if (adapter == null) {
-                            adapter = new CustomImageSelectAdapter(getApplicationContext(), images);
-                            gridView.setAdapter(adapter);
 
-                            progressBar.setVisibility(View.INVISIBLE);
-                            gridView.setVisibility(View.VISIBLE);
-                            orientationBasedUI(getResources().getConfiguration().orientation);
-
-                        } else {
-                            countSelected = msg.arg1;
-                            selectImageChanged();
-                            adapter.notifyDataSetChanged();
-                            /*
-                            Some selected images may have been deleted
-                            hence update action mode title
-                             */
-                        }
+                        progressBar.setVisibility(View.INVISIBLE);
+                        gridView.setVisibility(View.VISIBLE);
+                        adapter.setData(images);
+                        countSelected = msg.arg1;
+                        selectImageChanged();
+                        adapter.notifyDataSetChanged();
 
                         break;
                     }
@@ -289,27 +281,8 @@ public class ImageSelectActivity extends AppCompatActivity {
         super.onDestroy();
         images = null;
         if (adapter != null) {
-            adapter.releaseResources();
+            adapter.destory();
         }
-        gridView.setOnItemClickListener(null);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        orientationBasedUI(newConfig.orientation);
-    }
-
-    private void orientationBasedUI(int orientation) {
-        final WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        final DisplayMetrics metrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getMetrics(metrics);
-
-        if (adapter != null) {
-            int size = orientation == Configuration.ORIENTATION_PORTRAIT ? metrics.widthPixels / 3 : metrics.widthPixels / 5;
-            adapter.setLayoutParams(size);
-        }
-        gridView.setNumColumns(orientation == Configuration.ORIENTATION_PORTRAIT ? 3 : 5);
     }
 
     @Override
@@ -329,7 +302,7 @@ public class ImageSelectActivity extends AppCompatActivity {
 
     private void toggleSelection(int position) {
         if (!images.get(position).isSelected && countSelected >= Constants.limit) {
-            Toast.makeText(getApplicationContext(), String.format(getString(R.string.limit_exceeded), Constants.limit), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), String.format(getString(R.string.library_limit_exceeded), Constants.limit), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -393,11 +366,6 @@ public class ImageSelectActivity extends AppCompatActivity {
             Message message;
             if (adapter == null) {
                 message = handler.obtainMessage();
-                /*
-                If the adapter is null, this is first time this activity's view is
-                being shown, hence send FETCH_STARTED message to show progress bar
-                while images are loaded from phone
-                 */
                 message.what = Constants.FETCH_STARTED;
                 message.sendToTarget();
             }
@@ -429,12 +397,6 @@ public class ImageSelectActivity extends AppCompatActivity {
                 return;
             }
 
-            /*
-            In case this runnable is executed to onChange calling loadImages,
-            using countSelected variable can result in a race condition. To avoid that,
-            tempCountSelected keeps track of number of selected images. On handling
-            FETCH_COMPLETED message, countSelected is assigned value of tempCountSelected.
-             */
             int tempCountSelected = 0;
             ArrayList<Image> temp = new ArrayList<>(cursor.getCount());
 
@@ -443,17 +405,16 @@ public class ImageSelectActivity extends AppCompatActivity {
                     if (Thread.interrupted()) {
                         return;
                     }
-
-                    long id = cursor.getLong(cursor.getColumnIndex(projection[0]));
-                    String name = cursor.getString(cursor.getColumnIndex(projection[1]));
-                    String path = cursor.getString(cursor.getColumnIndex(projection[2]));
+                    long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID));//uri的id，用于获取图片
+                    String name = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)); //图片名字
+                    String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));//图片名字
+                    Log.i("takephoto", "id ：" + id + ", path :" + path + ", name : " + name);
                     boolean isSelected = selectedImages.contains(id);
                     if (isSelected) {
                         tempCountSelected++;
                     }
-
                     file = new File(path);
-                    if (file.exists()) {
+                    if (file != null && file.exists()) {
                         temp.add(new Image(id, name, path, isSelected));
                     }
 

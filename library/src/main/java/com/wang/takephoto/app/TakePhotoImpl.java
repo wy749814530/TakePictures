@@ -125,10 +125,14 @@ public class TakePhotoImpl implements TakePhoto {
             case TConstant.RC_PICK_PICTURE_FROM_GALLERY_ORIGINAL://从相册选择照片不裁剪
                 if (resultCode == Activity.RESULT_OK) {
                     try {
-                        takeResult(
-                                TResult.of(TImage.of(TUriParse.getFilePathWithUri(data.getData(), contextWrap.getActivity()), fromType)));
-                    } catch (TException e) {
-                        takeResult(TResult.of(TImage.of(data.getData(), fromType)), e.getDetailMessage());
+                        File file = TUriParse.convertUri2File(data.getData(), contextWrap.getActivity());
+                        if (file != null) {
+                            takeResult(TResult.of(TImage.of(file, fromType)));
+                        } else {
+                            takeResult(TResult.of(TImage.of(data.getData(), fromType)), "");
+                        }
+                    } catch (Exception e) {
+                        takeResult(TResult.of(TImage.of(data.getData(), fromType)), e.getMessage());
                         e.printStackTrace();
                     }
                 } else {
@@ -138,10 +142,14 @@ public class TakePhotoImpl implements TakePhoto {
             case TConstant.RC_PICK_PICTURE_FROM_DOCUMENTS_ORIGINAL://从文件选择照片不裁剪
                 if (resultCode == Activity.RESULT_OK) {
                     try {
-                        takeResult(TResult.of(
-                                TImage.of(TUriParse.getFilePathWithDocumentsUri(data.getData(), contextWrap.getActivity()), fromType)));
-                    } catch (TException e) {
-                        takeResult(TResult.of(TImage.of(outPutUri, fromType)), e.getDetailMessage());
+                        File file = TUriParse.convertUri2File(data.getData(), contextWrap.getActivity());
+                        if (file != null) {
+                            takeResult(TResult.of(TImage.of(file, fromType)));
+                        } else {
+                            takeResult(TResult.of(TImage.of(data.getData(), fromType)), "");
+                        }
+                    } catch (Exception e) {
+                        takeResult(TResult.of(TImage.of(data.getData(), fromType)), e.getMessage());
                         e.printStackTrace();
                     }
                 } else {

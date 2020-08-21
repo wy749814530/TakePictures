@@ -2,6 +2,7 @@ package com.wang.takephoto.model;
 
 import android.net.Uri;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -14,6 +15,7 @@ public class TImage implements Serializable {
     private String originalPath;
     private String compressPath;
     private FromType fromType;
+    private Uri uri;
     private boolean cropped;
     private boolean compressed;
 
@@ -25,18 +27,38 @@ public class TImage implements Serializable {
         return new TImage(uri, fromType);
     }
 
+    public static TImage of(File file, FromType fromType) {
+        return new TImage(file, fromType);
+    }
+
+    private TImage(File file, FromType fromType) {
+        this.uri = Uri.fromFile(file);
+        this.originalPath = file.getPath();
+        this.compressPath = file.getPath();
+        this.fromType = fromType;
+    }
+
     private TImage(String path, FromType fromType) {
         this.originalPath = path;
         this.fromType = fromType;
     }
 
     private TImage(Uri uri, FromType fromType) {
+        this.uri = uri;
         this.originalPath = uri.getPath();
         this.fromType = fromType;
     }
 
     public String getOriginalPath() {
         return originalPath;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
+
+    public Uri getUri() {
+        return uri;
     }
 
     public void setOriginalPath(String originalPath) {

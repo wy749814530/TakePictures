@@ -125,7 +125,7 @@ public abstract class TakePhotoFragment extends Fragment implements InvokeListen
      */
 
     public void takePhoto(boolean correctYes, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
-        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+        File file = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "/temp/" + System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -178,7 +178,7 @@ public abstract class TakePhotoFragment extends Fragment implements InvokeListen
             return;
         }
 
-        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+        File file = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "/temp/" + System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }

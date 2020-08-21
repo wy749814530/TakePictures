@@ -360,8 +360,8 @@ public class AlbumSelectActivity extends AppCompatActivity {
                         return;
                     }
 
-                    String album = cursor.getString(cursor.getColumnIndex(projection[0]));
-                    String image = cursor.getString(cursor.getColumnIndex(projection[1]));
+                    String album = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
+                    String image = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
 
                     /*
                     It may happen that some image file paths are still present in cache,

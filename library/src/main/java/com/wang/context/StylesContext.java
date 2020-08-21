@@ -9,8 +9,8 @@ import com.wang.takephoto.R;
  */
 public class StylesContext {
 
-    private int backIcon = R.mipmap.icon_back;
-    private int cancelIcon = R.mipmap.icon_close;
+    private int backIcon = R.mipmap.library_icon_back;
+    private int cancelIcon = R.mipmap.library_icon_close;
     private int titleBgColor = 0xffffffff;
     private int backgroudColor = 0xffe9f2f7;
 

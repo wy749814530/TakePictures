@@ -1,25 +1,35 @@
 package com.wang.takephoto.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.wang.takephoto.SelectPictureEnum;
 import com.wang.takephoto.compress.CompressConfig;
 import com.wang.takephoto.model.CropOptions;
 import com.wang.takephoto.model.InvokeParam;
 import com.wang.takephoto.model.LubanOptions;
 import com.wang.takephoto.model.TContextWrap;
 import com.wang.takephoto.model.TExceptionType;
+import com.wang.takephoto.model.TImage;
 import com.wang.takephoto.model.TResult;
 import com.wang.takephoto.model.TakePhotoOptions;
 import com.wang.takephoto.permission.InvokeListener;
 import com.wang.takephoto.permission.PermissionManager;
 import com.wang.takephoto.permission.TakePhotoInvocationHandler;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 继承这个类来让Activity获取拍照的能力<br>
@@ -35,11 +45,13 @@ public abstract class TakePhotoActivity extends AppCompatActivity implements Inv
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private TakePhotoListener photoListener = new TakePhotoListener();
+    private static final int READ_REQUEST_CODE = 1042;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
+        configCompress(true, 102400, 800, 800, false, true, true);
     }
 
     @Override
@@ -47,6 +59,7 @@ public abstract class TakePhotoActivity extends AppCompatActivity implements Inv
         getTakePhoto().onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -125,8 +138,8 @@ public abstract class TakePhotoActivity extends AppCompatActivity implements Inv
      * @param cropWidth
      */
 
-    public void takePhoto(boolean correctYes, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
-        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+    private void takePhoto(boolean correctYes, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "/temp/" + System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -160,7 +173,7 @@ public abstract class TakePhotoActivity extends AppCompatActivity implements Inv
      * @param cropHeight
      * @param cropWidth
      */
-    public void selectPhotoFormAlbum(int limit, boolean useSelfAlbum, boolean fromAlbum, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
+    private void selectPhotoFormAlbum(int limit, boolean useSelfAlbum, boolean fromAlbum, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
         // 做多选择多少张图片
         TakePhotoOptions.Builder builder = new TakePhotoOptions.Builder();
         if (useSelfAlbum) {
@@ -179,7 +192,7 @@ public abstract class TakePhotoActivity extends AppCompatActivity implements Inv
             return;
         }
 
-        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "/temp/" + System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -247,6 +260,20 @@ public abstract class TakePhotoActivity extends AppCompatActivity implements Inv
         @Override
         public void takeCancel() {
             takePhotoCancel();
+        }
+    }
+
+    public void takePhoto(boolean cropYes) {
+        takePhoto(true, cropYes, true, false, 800, 800);
+    }
+
+    public void selectPhotoFormAlbum(SelectPictureEnum pictureEnum, boolean cropYes) {
+        if (pictureEnum == SelectPictureEnum.SELECT_FORM_CUSTOM) {
+            selectPhotoFormAlbum(0, true, true, cropYes, true, false, 800, 800);
+        } else if (pictureEnum == SelectPictureEnum.SELECT_FORM_DOCUMENT) {
+            selectPhotoFormAlbum(0, false, false, cropYes, true, false, 800, 800);
+        } else {
+            selectPhotoFormAlbum(0, false, true, cropYes, true, false, 800, 800);
         }
     }
 

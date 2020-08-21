@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_item_lay"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="120dp"
     android:background="#00000000"
     android:foregroundGravity="center"
     android:paddingLeft="1dp"
@@ -26,6 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_margin="10dp"
-        android:src="@mipmap/icon_select"
+        android:src="@mipmap/library_icon_select"
         android:visibility="gone" />
 </FrameLayout>

@@ -10,7 +10,7 @@
 
 <!--
     1、代表的根目录:Context.getFilesDir()
-    2、代表的根目录:Environment.getExternalStorageDirectory()
+    2、代表的根目录:getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     3、代表的根目录:getCacheDir()
     4、上述代码中path=""，是有特殊意义的，它代码根目录，也就是说你可以向其它的应用
     共享根目录及其子目录下任何一个文件了，如果你将path设为path=“pictures”，那么它

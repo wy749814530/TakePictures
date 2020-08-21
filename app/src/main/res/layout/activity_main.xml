@@ -23,4 +23,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="选图" />
+
+    <Button
+        android:id="@+id/btnSelectPicture_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选图_文件" />
+
+    <Button
+        android:id="@+id/btnSelectPicture_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选图——相册" />
 </LinearLayout>
