@@ -95,10 +95,7 @@
         android:paddingLeft="1dp"
         android:paddingTop="1dp"
         android:paddingRight="1dp"
-        android:paddingBottom="1dp"
-        android:stretchMode="columnWidth"
-        apps:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        apps:spanCount="3" />
+        android:paddingBottom="1dp" />
 
     <Button
         android:id="@+id/button_grant_permission"

@@ -2,18 +2,17 @@ package com.wang.multipleimageselect.adapters;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.wang.multipleimageselect.models.Image;
 import com.wang.takephoto.R;
 
@@ -51,21 +50,21 @@ public class CustomImageSelectAdapter extends RecyclerView.Adapter<CustomImageSe
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-
-        if (imageList.get(position).isSelected) {
-            holder.view.setAlpha(0.5f);
+        Image image = imageList.get(position);
+        if (image.isSelected) {
+            holder.view.setVisibility(View.VISIBLE);
             holder.ivSelect.setVisibility(View.VISIBLE);
         } else {
-            holder.view.setAlpha(0.0f);
+            holder.view.setVisibility(View.GONE);
             holder.ivSelect.setVisibility(View.GONE);
         }
-        RequestOptions options = new RequestOptions().placeholder(R.mipmap.library_icon_default);
-        Log.i("ImageSelectAdapter", "path: " + imageList.get(position).path);
-        Glide.with(mContext).load(imageList.get(position).path).apply(options).into(holder.imageView);
+        Glide.with(mContext).load(image.path).into(holder.imageView);
 
         holder.setItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                notifyDataSetChanged();
+
                 if (mListener != null) {
                     mListener.onItemClick(imageList.get(position), position);
                 }
@@ -91,7 +90,7 @@ public class CustomImageSelectAdapter extends RecyclerView.Adapter<CustomImageSe
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
-        public FrameLayout frameItemLay;
+        public RelativeLayout frameItemLay;
         public View view;
         public ImageView ivSelect;
 

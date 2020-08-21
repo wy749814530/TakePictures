@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.wang.multipleimageselect.adapters.CustomAlbumSelectAdapter;
 import com.wang.multipleimageselect.helpers.Constants;
@@ -46,7 +49,8 @@ import java.util.HashSet;
 public class AlbumSelectActivity extends AppCompatActivity {
     private final String TAG = AlbumSelectActivity.class.getName();
 
-    private ArrayList<Album> albums;
+    private ArrayList<Album> albums = new ArrayList<>();
+    ;
 
     private TextView requestPermission;
     private Button grantPermission;
@@ -55,7 +59,7 @@ public class AlbumSelectActivity extends AppCompatActivity {
     private TextView errorDisplay;
     private RelativeLayout rlTitleLay;
     private ProgressBar progressBar;
-    private GridView gridView;
+    private RecyclerView gridView;
     private CustomAlbumSelectAdapter adapter;
     private ImageView ivBack;
     private ContentObserver observer;
@@ -93,12 +97,15 @@ public class AlbumSelectActivity extends AppCompatActivity {
         hidePermissionHelperUI();
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar_album_select);
-        gridView = (GridView) findViewById(R.id.grid_view_album_select);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView = findViewById(R.id.grid_view_album_select);
+        adapter = new CustomAlbumSelectAdapter(getApplicationContext(), albums);
+        gridView.setLayoutManager(new GridLayoutManager(this, 2));
+        gridView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CustomAlbumSelectAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(Album image, int index) {
                 Intent intent = new Intent(getApplicationContext(), ImageSelectActivity.class);
-                intent.putExtra(Constants.INTENT_EXTRA_ALBUM, albums.get(position).name);
+                intent.putExtra(Constants.INTENT_EXTRA_ALBUM, image.name);
                 startActivityForResult(intent, Constants.REQUEST_CODE);
             }
         });
@@ -123,48 +130,31 @@ public class AlbumSelectActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case Constants.PERMISSION_GRANTED: {
                         hidePermissionHelperUI();
-
                         loadAlbums();
-
                         break;
                     }
 
                     case Constants.PERMISSION_DENIED: {
                         showPermissionHelperUI();
-
                         progressBar.setVisibility(View.INVISIBLE);
                         gridView.setVisibility(View.INVISIBLE);
-
                         break;
                     }
 
                     case Constants.FETCH_STARTED: {
                         progressBar.setVisibility(View.VISIBLE);
                         gridView.setVisibility(View.INVISIBLE);
-
                         break;
                     }
-
                     case Constants.FETCH_COMPLETED: {
-                        if (adapter == null) {
-                            adapter = new CustomAlbumSelectAdapter(getApplicationContext(), albums);
-                            gridView.setAdapter(adapter);
-
-                            progressBar.setVisibility(View.INVISIBLE);
-                            gridView.setVisibility(View.VISIBLE);
-                            orientationBasedUI(getResources().getConfiguration().orientation);
-
-                        } else {
-                            adapter.notifyDataSetChanged();
-                        }
-
+                        progressBar.setVisibility(View.INVISIBLE);
+                        gridView.setVisibility(View.VISIBLE);
+                        adapter.setData(albums);
                         break;
                     }
-
                     case Constants.ERROR: {
                         progressBar.setVisibility(View.INVISIBLE);
                         errorDisplay.setVisibility(View.VISIBLE);
-
                         break;
                     }
 
@@ -242,30 +232,9 @@ public class AlbumSelectActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        albums = null;
         if (adapter != null) {
             adapter.releaseResources();
         }
-        gridView.setOnItemClickListener(null);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        orientationBasedUI(newConfig.orientation);
-    }
-
-    private void orientationBasedUI(int orientation) {
-        final WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        final DisplayMetrics metrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getMetrics(metrics);
-
-        if (adapter != null) {
-            int size = orientation == Configuration.ORIENTATION_PORTRAIT ? metrics.widthPixels / 2 : metrics.widthPixels / 4;
-            adapter.setLayoutParams(size);
-        }
-        gridView.setNumColumns(orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 4);
     }
 
     @Override
@@ -370,7 +339,7 @@ public class AlbumSelectActivity extends AppCompatActivity {
                     if image file exists.
                      */
                     file = new File(image);
-                    if (file.exists() && !albumSet.contains(album)) {
+                    if (file != null && file.exists() && !TextUtils.isEmpty(album) && !albumSet.contains(album)) {
                         temp.add(new Album(album, image));
                         albumSet.add(album);
                     }
@@ -379,9 +348,6 @@ public class AlbumSelectActivity extends AppCompatActivity {
             }
             cursor.close();
 
-            if (albums == null) {
-                albums = new ArrayList<>();
-            }
             albums.clear();
             albums.addAll(temp);
 

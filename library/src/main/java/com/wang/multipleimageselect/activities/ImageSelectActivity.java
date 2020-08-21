@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wang.context.StylesContext;
@@ -101,7 +102,8 @@ public class ImageSelectActivity extends AppCompatActivity {
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar_image_select);
         gridView = findViewById(R.id.grid_view_image_select);
-        adapter = new CustomImageSelectAdapter(getApplicationContext(), images);
+        adapter = new CustomImageSelectAdapter(this, images);
+        gridView.setLayoutManager(new GridLayoutManager(this, 3));
         gridView.setAdapter(adapter);
         adapter.setOnItemClickListener(new CustomImageSelectAdapter.OnItemClickListener() {
             @Override
@@ -197,7 +199,6 @@ public class ImageSelectActivity extends AppCompatActivity {
                         adapter.setData(images);
                         countSelected = msg.arg1;
                         selectImageChanged();
-                        adapter.notifyDataSetChanged();
 
                         break;
                     }
@@ -312,7 +313,7 @@ public class ImageSelectActivity extends AppCompatActivity {
         } else {
             countSelected--;
         }
-        adapter.notifyDataSetChanged();
+        adapter.setData(images);
     }
 
     private void deselectAll() {
@@ -321,7 +322,7 @@ public class ImageSelectActivity extends AppCompatActivity {
         }
         countSelected = 0;
         selectImageChanged();
-        adapter.notifyDataSetChanged();
+        adapter.setData(images);
     }
 
     private ArrayList<Image> getSelected() {
