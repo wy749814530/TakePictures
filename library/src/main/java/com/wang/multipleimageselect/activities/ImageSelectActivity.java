@@ -118,9 +118,13 @@ public class ImageSelectActivity extends AppCompatActivity {
     }
 
     private void initStyles() {
-        rlMainLay.setBackgroundColor(StylesContext.getInstance().getBackgroudColor());
-        rlTitleLay.setBackgroundColor(StylesContext.getInstance().getTitleBgColor());
+        rlMainLay.setBackgroundColor(StylesContext.getInstance().getBackgroudColor(this));
+        rlTitleLay.setBackgroundColor(StylesContext.getInstance().getTitleBgColor(this));
+        tvSelectDescription.setBackgroundColor(StylesContext.getInstance().getTitleTextColor(this));
+        tvAdd.setBackgroundColor(StylesContext.getInstance().getTitleTextColor(this));
+
         ivBack.setImageResource(StylesContext.getInstance().getBackIcon());
+        ivCancel.setImageResource(StylesContext.getInstance().getCancelIcon());
     }
 
     public void onBackClick(View view) {

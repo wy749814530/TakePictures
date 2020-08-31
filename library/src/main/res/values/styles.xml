@@ -3,28 +3,9 @@
 
     <style name="Crop" />
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
 
-    <!--
-        <style name="CustomActionModeStyle" parent="Base.Widget.AppCompat.ActionMode">
-            <item name="background">@color/multiple_image_select_primary</item>
-        </style>
-    -->
-
-    <!--    <style name="CustomToolbarTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-            <item name="android:textColorPrimary">@color/multiple_image_select_toolbarPrimaryText</item>
-        </style>-->
-
-<!--    <style name="MultipleImageSelectTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/multiple_image_select_primary</item>
-        <item name="colorPrimaryDark">@color/multiple_image_select_primaryDark</item>
-        <item name="colorAccent">@color/multiple_image_select_accent</item>
-
-        <item name="actionModeStyle">@style/CustomActionModeStyle</item>
-        <item name="windowActionModeOverlay">true</item>
-    </style>-->
+    <style name="ActivityTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
 
     <style name="Crop.ActionButton">
         <item name="android:layout_width">0dp</item>
@@ -43,25 +24,5 @@
         <item name="android:textColor">@color/crop__button_text</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">13sp</item>
-    </style>
-
-    <style name="Crop.ActionButtonText.Cancel">
-        <item name="android:drawableLeft">@drawable/crop__ic_cancel</item>
-        <item name="android:text">@string/library_crop__cancel</item>
-    </style>
-
-    <style name="Crop.ActionButtonText.Done">
-        <item name="android:drawableLeft">@drawable/crop__ic_done</item>
-        <item name="android:text">@string/library_crop__done</item>
-    </style>
-
-    <style name="Crop.DoneCancelBar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/crop__bar_height</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:divider">@drawable/crop__divider</item>
-        <item name="android:showDividers" ns1:ignore="NewApi">middle</item>
-        <item name="android:dividerPadding" ns1:ignore="NewApi">12dp</item>
-        <item name="android:background">@color/crop__button_bar</item>
     </style>
 </resources>

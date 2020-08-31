@@ -57,6 +57,7 @@ public class AlbumSelectActivity extends AppCompatActivity {
     private final String[] requiredPermissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     private RelativeLayout rlMainLay;
     private TextView errorDisplay;
+    private TextView tvTitle;
     private RelativeLayout rlTitleLay;
     private ProgressBar progressBar;
     private RecyclerView gridView;
@@ -78,7 +79,7 @@ public class AlbumSelectActivity extends AppCompatActivity {
             finish();
         }
         Constants.limit = intent.getIntExtra(Constants.INTENT_EXTRA_LIMIT, Constants.DEFAULT_LIMIT);
-
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         errorDisplay = (TextView) findViewById(R.id.text_view_error);
         errorDisplay.setVisibility(View.INVISIBLE);
 
@@ -115,8 +116,9 @@ public class AlbumSelectActivity extends AppCompatActivity {
     }
 
     private void initStyles() {
-        rlMainLay.setBackgroundColor(StylesContext.getInstance().getBackgroudColor());
-        rlTitleLay.setBackgroundColor(StylesContext.getInstance().getTitleBgColor());
+        rlMainLay.setBackgroundColor(StylesContext.getInstance().getBackgroudColor(this));
+        rlTitleLay.setBackgroundColor(StylesContext.getInstance().getTitleBgColor(this));
+        tvTitle.setBackgroundColor(StylesContext.getInstance().getTitleTextColor(this));
         ivBack.setImageResource(StylesContext.getInstance().getBackIcon());
     }
 

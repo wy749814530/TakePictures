@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="crop__button_bar">#f3f3f3</color>
+    <color name="crop__button_text">#E1E2E3</color>
+    <color name="crop__selector_focused">#F2F2F2</color>
+    <color name="crop__selector_pressed">#F7F7F7</color>
+
+    <color name="titleBackgroundColor">#000000</color>
+    <color name="titleTextColor">#FFFFFF</color>
+    <color name="backgroundColor">#333333</color>
+    <color name="textWhiteColor">#222222</color>
+    <color name="textDarkColor">#FFFFFF</color>
+</resources>

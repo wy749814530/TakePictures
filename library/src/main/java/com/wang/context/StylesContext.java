@@ -1,5 +1,9 @@
 package com.wang.context;
 
+import android.content.Context;
+
+import androidx.core.content.ContextCompat;
+
 import com.wang.takephoto.R;
 
 /**
@@ -11,8 +15,9 @@ public class StylesContext {
 
     private int backIcon = R.mipmap.library_icon_back;
     private int cancelIcon = R.mipmap.library_icon_close;
-    private int titleBgColor = 0xffffffff;
-    private int backgroudColor = 0xffe9f2f7;
+    private int titleBgColor = 0;
+    private int titleTextColor = 0;
+    private int backgroudColor = 0;
 
     private StylesContext() {
     }
@@ -25,13 +30,6 @@ public class StylesContext {
         return Factory.INSTANCE;
     }
 
-    public void setBackgroudColor(int backgroudColor) {
-        this.backgroudColor = backgroudColor;
-    }
-
-    public int getBackgroudColor() {
-        return backgroudColor;
-    }
 
     public void setBackIcon(int backIcon) {
         this.backIcon = backIcon;
@@ -49,11 +47,37 @@ public class StylesContext {
         return cancelIcon;
     }
 
+
+    public void setBackgroudColor(int backgroudColor) {
+        this.backgroudColor = backgroudColor;
+    }
+
+    public int getBackgroudColor(Context context) {
+        if (backgroudColor == 0) {
+            backgroudColor = ContextCompat.getColor(context, R.color.backgroundColor);
+        }
+        return backgroudColor;
+    }
+
     public void setTitleBgColor(int titleBgColor) {
         this.titleBgColor = titleBgColor;
     }
 
-    public int getTitleBgColor() {
+    public int getTitleBgColor(Context context) {
+        if (titleBgColor == 0) {
+            ContextCompat.getColor(context, R.color.titleBackgroundColor);
+        }
         return titleBgColor;
+    }
+
+    public void setTitleTextColor(int titleTextColor) {
+        this.titleTextColor = titleTextColor;
+    }
+
+    public int getTitleTextColor(Context context) {
+        if (titleBgColor == 0) {
+            ContextCompat.getColor(context, R.color.titleTextColor);
+        }
+        return titleTextColor;
     }
 }

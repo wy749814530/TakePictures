@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.wang.takephoto.SelectPictureEnum;
 import com.wang.takephoto.compress.CompressConfig;
 import com.wang.takephoto.model.CropOptions;
 import com.wang.takephoto.model.InvokeParam;
@@ -41,6 +42,7 @@ public abstract class TakePhotoFragmentActivity extends FragmentActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
+        configCompress(true, 102400, 800, 800, false, true, true);
     }
 
     @Override
@@ -124,7 +126,7 @@ public abstract class TakePhotoFragmentActivity extends FragmentActivity impleme
      * @param cropWidth
      */
 
-    public void takePhoto(boolean correctYes, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
+    private void takePhoto(boolean correctYes, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
         File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "/temp/" + System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -158,7 +160,7 @@ public abstract class TakePhotoFragmentActivity extends FragmentActivity impleme
      * @param cropHeight
      * @param cropWidth
      */
-    public void selectPhotoFormAlbum(int limit, boolean fromAlbum, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
+    private void selectPhotoFormAlbum(int limit, boolean fromAlbum, boolean cropYes, boolean cropOwn, boolean aspectOrSize, int cropHeight, int cropWidth) {
         // 做多选择多少张图片
 
         TakePhotoOptions.Builder builder = new TakePhotoOptions.Builder();
@@ -246,6 +248,20 @@ public abstract class TakePhotoFragmentActivity extends FragmentActivity impleme
         @Override
         public void takeCancel() {
             takePhotoCancel();
+        }
+    }
+
+    public void takePhoto(boolean cropYes) {
+        takePhoto(true, cropYes, true, false, 800, 800);
+    }
+
+    public void selectPhotoFormAlbum(SelectPictureEnum pictureEnum, boolean cropYes) {
+        if (pictureEnum == SelectPictureEnum.SELECT_FORM_CUSTOM) {
+            selectPhotoFormAlbum(0, true, true, cropYes, true, 800, 800);
+        } else if (pictureEnum == SelectPictureEnum.SELECT_FORM_DOCUMENT) {
+            selectPhotoFormAlbum(0, false, false, cropYes, true, 800, 800);
+        } else {
+            selectPhotoFormAlbum(0, false, true, cropYes, true, 800, 800);
         }
     }
 

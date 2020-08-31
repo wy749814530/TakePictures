@@ -17,15 +17,20 @@
 
         <activity
             android:name="com.wang.crop.CropImageActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
 
         <activity
             android:name="com.wang.multipleimageselect.activities.ImageSelectActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
 
         <activity
             android:name="com.wang.multipleimageselect.activities.AlbumSelectActivity"
-            android:screenOrientation="portrait" />
-
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme" />
     </application>
 </manifest>
