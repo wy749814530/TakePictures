@@ -15,4 +15,5 @@
     <string name="library_permission_denied_images">Zugriff auf Fotos, Medien und Dateien auf dem Gerät erlauben, um die Bilder anzuzeigen</string>
     <string name="library_selected">ausgewählt</string>
     <string name="library_photo_album">Fotoalbum</string>
+    <string name="clipping">Schneiderei</string>
 </resources>

@@ -16,4 +16,5 @@
     <string name="library_permission_denied_images">Allow access to photos, media and files on your device to view images</string>
     <string name="library_selected">selected</string>
     <string name="library_photo_album">Photo album</string>
+    <string name="clipping">Clipping</string>
 </resources>

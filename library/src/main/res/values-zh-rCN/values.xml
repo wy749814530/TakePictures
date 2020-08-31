@@ -16,4 +16,5 @@
     <string name="library_permission_denied_images">允许访问设备上的照片，媒体和文件以查看图像</string>
     <string name="library_selected">已选</string>
     <string name="library_photo_album">相册</string>
+    <string name="clipping">剪裁</string>
 </resources>
