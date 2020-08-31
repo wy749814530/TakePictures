@@ -6,7 +6,7 @@
     <color name="crop__selector_focused">#F2F2F2</color>
     <color name="crop__selector_pressed">#F7F7F7</color>
 
-    <color name="titleBackgroundColor">#000000</color>
+    <color name="titleBackgroundColor">#1E1E1E</color>
     <color name="titleTextColor">#FFFFFF</color>
     <color name="backgroundColor">#333333</color>
     <color name="textWhiteColor">#222222</color>

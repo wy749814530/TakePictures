@@ -18,6 +18,7 @@ public class StylesContext {
     private int titleBgColor = 0;
     private int titleTextColor = 0;
     private int backgroudColor = 0;
+    private boolean use = false;
 
     private StylesContext() {
     }
@@ -30,6 +31,14 @@ public class StylesContext {
         return Factory.INSTANCE;
     }
 
+
+    public void setUse(boolean use) {
+        this.use = use;
+    }
+
+    public boolean isUse() {
+        return use;
+    }
 
     public void setBackIcon(int backIcon) {
         this.backIcon = backIcon;

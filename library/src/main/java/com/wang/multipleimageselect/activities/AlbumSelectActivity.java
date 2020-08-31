@@ -116,10 +116,12 @@ public class AlbumSelectActivity extends AppCompatActivity {
     }
 
     private void initStyles() {
-        rlMainLay.setBackgroundColor(StylesContext.getInstance().getBackgroudColor(this));
-        rlTitleLay.setBackgroundColor(StylesContext.getInstance().getTitleBgColor(this));
-        tvTitle.setBackgroundColor(StylesContext.getInstance().getTitleTextColor(this));
-        ivBack.setImageResource(StylesContext.getInstance().getBackIcon());
+        if (StylesContext.getInstance().isUse()) {
+            rlMainLay.setBackgroundColor(StylesContext.getInstance().getBackgroudColor(this));
+            rlTitleLay.setBackgroundColor(StylesContext.getInstance().getTitleBgColor(this));
+            tvTitle.setBackgroundColor(StylesContext.getInstance().getTitleTextColor(this));
+            ivBack.setImageResource(StylesContext.getInstance().getBackIcon());
+        }
     }
 
     @Override
