@@ -20,20 +20,20 @@
 
         <ImageView
             android:id="@+id/btn_cancel"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="60dp"
             android:src="@mipmap/cancel_icon" />
 
         <ImageView
             android:id="@+id/btn_done"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="60dp"
             android:src="@mipmap/ok_icon" />
     </RelativeLayout>
 </RelativeLayout>
